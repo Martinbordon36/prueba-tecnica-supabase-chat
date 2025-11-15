@@ -10,7 +10,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        {/* 👇 El AuthProvider ENVUELVE toda la app */}
         <AuthProvider>
           {children}
         </AuthProvider>
