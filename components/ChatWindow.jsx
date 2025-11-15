@@ -23,6 +23,11 @@ export default function ChatWindow({ conversation, user, onRefresh }) {
 
     }, [conversation?.id]);
 
+    useEffect(() => {
+        setNewTitle(conversation.title || "Grupo sin nombre");
+    }, [conversation?.id, conversation?.title]);
+    
+
     // Carga de mensajes en Tiempo Real
 
     useEffect(() => {
