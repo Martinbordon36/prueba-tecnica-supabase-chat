@@ -17,8 +17,7 @@ export default function Sidebar({
     const router = useRouter();
 
     return (
-        <div className="flex flex-col w-[30%] bg-[#F0F2F5] border-r border-gray-300 h-screen">
-
+    <div className="flex flex-col bg-[#F0F2F5] border-r border-gray-300 h-full">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-[#EDEDED] border-b border-gray-300">
                 <div className="flex items-center gap-3">

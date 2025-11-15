@@ -11,6 +11,7 @@ export default function Home() {
   const router = useRouter();
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false); // 👈 NUEVO
 
 
   // Obtengo Conversaciones con ultimos mensajes y ultimos leeidos
@@ -273,17 +274,75 @@ export default function Home() {
     );
 
   if (!user) return null;
-
+  if (!ready)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-500 animate-pulse">Cargando sesión...</p>
+      </div>
+    );
+  
+  if (!user) return null;
+  
+  if (!ready)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-500 animate-pulse">Cargando sesión...</p>
+      </div>
+    );
+  
+  if (!user) return null;
+  
   return (
-    <div className="flex h-screen bg-[#EDEDED]">
-      <Sidebar
-        user={user}
-        conversations={conversations}
-        onSelectConversation={handleSelectConversation}
-        onRefresh={fetchConversations}
-        onDeleteConversation={deleteConversation}
-      />
-
+    <div className="h-screen bg-[#EDEDED] flex md:flex-row flex-col relative">
+  
+      {/*  Header + botón de menú (solo móvil) */}
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[#EDEDED] border-b border-gray-300">
+        <button
+          className="p-2 rounded-full bg-white shadow"
+          onClick={() => setMenuOpen(true)}
+        >
+          ☰
+        </button>
+        <span className="font-medium text-gray-700 truncate max-w-[70%]">
+          {user.email?.split("@")[0]}
+        </span>
+      </div>
+  
+      {/* 🔳 Overlay cuando el menú está abierto en mobile */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-10 md:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+  
+      {/* 📱 Sidebar como drawer en MOBILE */}
+      {menuOpen && (
+        <div className="fixed inset-y-0 left-0 w-[80%] max-w-[320px] bg-[#F0F2F5] border-r border-gray-300 z-20 md:hidden">
+          <Sidebar
+            user={user}
+            conversations={conversations}
+            onSelectConversation={(c) => {
+              handleSelectConversation(c);
+              setMenuOpen(false); // cerramos drawer al elegir chat
+            }}
+            onRefresh={fetchConversations}
+            onDeleteConversation={deleteConversation}
+          />
+        </div>
+      )}
+  
+      <div className="hidden md:block md:w-[30%] h-full">
+        <Sidebar
+          user={user}
+          conversations={conversations}
+          onSelectConversation={handleSelectConversation}
+          onRefresh={fetchConversations}
+          onDeleteConversation={deleteConversation}
+        />
+      </div>
+  
+      {/* 💬 Zona de chat */}
       <div className="flex-1">
         {selectedConversation ? (
           <ChatWindow
@@ -292,11 +351,12 @@ export default function Home() {
             onRefresh={fetchConversations}
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
+          <div className="hidden md:flex items-center justify-center h-full text-gray-400">
             Seleccioná un chat para comenzar
           </div>
         )}
       </div>
     </div>
   );
+  
 }
