@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💬 Prueba Técnica – Chat en Tiempo Real (Next.js + Supabase)
 
-## Getting Started
+Este proyecto es una aplicación de chat en tiempo real desarrollada como parte de una **prueba técnica Full Stack**.  
+La aplicación permite:
 
-First, run the development server:
+- Autenticación de usuarios (registro + login)
+- Chats directos entre dos usuarios
+- Chats grupales
+- Actualización de nombre del grupo
+- Lista de conversaciones ordenada por últimos mensajes
+- Notificaciones en tiempo real
+- Vista responsiva (web + mobile)
+- Manejo de mensajes leídos
+- Eliminacion de chats
+---
 
+## 🚀 Tecnologías utilizadas
+
+### **Frontend**
+- Next.js - (App Router)
+- React.js
+- TailwindCSS
+- Supabase JS Client
+- Lucide Icons
+
+### **Backend (como servicio)**
+- Supabase:
+  - Authentication
+  - Realtime (Postgres Changes)
+  - Database (PostgreSQL)
+  - Row Level Security
+
+---
+
+## 🏗️ Arquitectura del sistema
+
+La app está construida con una arquitectura **clean y modular**, conectando el frontend con Supabase mediante:
+
+- **Contexto global**: manejo de usuario autenticado
+- **Componentes desacoplados** (`Sidebar`, `ChatWindow`, `MessageBubble`)
+- **Suscripciones en tiempo real** por conversación
+- **Estructura de tablas pensada para escalabilidad**:
+  - `profiles`
+  - `conversations`
+  - `conversation_members`
+  - `messages`
+
+---
+
+## ✨ Funcionalidades principales
+
+### 🔐 **Autenticación**
+- Registro con email + password
+- Login
+- Creación automática de perfil (tabla *profiles*)
+
+### 💬 **Chats**
+- Chat directo 1 a 1
+- Chats grupales
+- Edición del nombre del grupo
+- Eliminacion de chat
+- Reaparición automática cuando llega un nuevo mensaje
+
+### ⚡ **Mensajes**
+- Envío en tiempo real usando **Supabase Realtime**
+- Auto-scroll al último mensaje
+- Marca como leído al abrir conversación
+- Filtro inteligente por `last_cleared_at` para limpiar historial
+
+### 📱 **Responsividad**
+- Sidebar fijo en desktop
+- Sidebar tipo *slide-over* en mobile con botón "Menú"
+- Diseño inspirado en WhatsApp Web
+
+---
+
+## 📦 Instalación y ejecución en local
+
+### 1️⃣ Clonar el repositorio
 ```bash
+git clone https://github.com/Martinbordon36/prueba-tecnica-supabase-chat.git
+cd prueba-tecnica-supabase-chat
+npm install 
+
+## Crear un archivo .env.local con las siguentes credenciales - el valor de las variables se enviara por email .
+
+- NEXT_PUBLIC_SUPABASE_URL=
+- NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+#Luego ejecutamos la app
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#la app corre en el puerto: 3000 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+➡️ http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Para visualizarla del celular ingresamos en la ip de nuestra compu (ipconfig - ifconfig , buscamos la ip correspondiente y le agregamos el puerto :3000)
