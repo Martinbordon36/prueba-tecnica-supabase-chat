@@ -96,3 +96,9 @@ npm run dev
 ➡️ http://localhost:3000
 
 # Para visualizarla del celular ingresamos en la ip de nuestra compu (ipconfig - ifconfig , buscamos la ip correspondiente y le agregamos el puerto :3000)
+
+#URL FUNCIONANDO
+
+https://prueba-tecnica-supabase-chat.vercel.app/login
+
+
